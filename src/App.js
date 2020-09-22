@@ -29,7 +29,7 @@ class App extends Component {
 
   checkLogin = (login, password) => {
     let connected = false;
-    this.state.users.forEach((user , index ) => {
+    this.state.users.forEach((user, index) => {
       if (login === user.id && password === user.pwd) {
         connected = true;
 
@@ -46,79 +46,27 @@ class App extends Component {
     }
   }
 
-
-
-  newLogin = (newLogin, newPassword, confirmPassword) => {
+  newLogin = (newLogin, newPassword) => {
     let connected = false;
-    
-   
-    this.state.users.forEach((user, index)=> {
+    if (this.state.users.find(({ id }) => id === newLogin)) {
+      return alert("Nom d'utilisateur déjà prit !");
 
-      if( user.id !== newLogin && newPassword === confirmPassword) {
-        connected = true;
-        let newUser = {
+    }
+    else if (!connected) {
+
+      let newUser = {
         id: newLogin,
         pwd: newPassword,
-        tasks: [] };
-        this.setState({ users: [...this.state.users, newUser] ,
-            userIndexConnected: index,
-            userLoginConnected: newLogin,
-            userTasksConnected: user.tasks
-          });
-        
-      }
-    })
-    if (!connected) {
-      if(newPassword !== confirmPassword){
-        alert("Erreur dans le mot de passe");
-      }
-     /*  Ne pas créer de compte si le nom d'utilisateur est déjà utilisé - ne marche pas
-      else if (this.state.users.id === newLogin){
-         return alert("Nom d'utilisateur déjà prit !")
-      } */
+        tasks: []
+      };
+      this.setState({
+        users: [...this.state.users, newUser],
+        userIndexConnected: this.state.users.length,
+        userLoginConnected: newLogin,
+        userTasksConnected: []
+      });
     }
-}
-   
-      /* essai pour newLogin en ternaire
-      newLogin = (newLogin, newPassword) => {
-   
-        let newUser = {};
-        //this.state.users.forEach((user)=> {
-          // {newPassword !== confirmPassword?
-          // //alerte("Erreur dans confirmation du mot de passe !")
-          // newUser = {
-          //   id: '',
-          //   pwd: '',
-          //   tasks: []
-          // }
-          // :
-            this.state.user.id === newLogin?
-            
-            alert("Cet identifiant est déjà prit !")
-            :
-            newUser = {
-              id: newLogin,
-              pwd: newPassword,
-              tasks: []
-            }
-            this.setState({ users: [...this.state.users, newUser] })
-          
-          }
-          //)}
- */
-    
-  
-    
-    
-  
-
-
-  /*checkAdd = (user) => {
-    this.setState({
-      users: [...this.state.users, user]
-
-    })
-  }*/
+  }
 
 
   updateUserTasks = () => {
@@ -166,12 +114,12 @@ class App extends Component {
     }
   }
 
-  deconnection = () => {
-    this.setState({ userLoginConnected: "", isClicked: false});
+  logout = () => {
+    this.setState({ userLoginConnected: "", isClicked: false });
   }
 
 
-  handleNewAccountClick = (isClicked) => {
+  handleNewAccountClick = () => {
     this.setState({ isClicked: !this.state.isClicked });
 
   }
@@ -184,13 +132,14 @@ class App extends Component {
         {
           userLoginConnected !== "" ?
             <div>
+              <div>
+                <button className="logoutBtn"onClick={this.logout}>Déconnexion</button>
+              </div>
               <Form addTache={this.addTache} />
               <List taches={userTasksConnected} checkTache={this.checkTache} />
               <button onClick={this.removeChecked}>Supprimer les tâches accomplies</button>
               <button onClick={this.removeAllTaches}>Supprimer toutes les tâches</button>
-              <div>
-                <button onClick={this.deconnection}>Déconnexion</button>
-              </div>
+              
 
             </div>
             :
@@ -211,15 +160,6 @@ class App extends Component {
         }
       </div>
     );
-
-    /* let formOrList = <Connection verifyLogin={this.checkLogin} />;
-    if (this.state.userLoginConnected) {
-      formOrList = <TodoList />;
-    }
-
-    return (
-      {formOrList}
-    ); */
   }
 }
 

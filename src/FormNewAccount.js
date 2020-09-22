@@ -19,43 +19,41 @@ class FormNewAccount extends Component {
         });
     }
 
-     /* handleSubmit = event => {
+      /* handleSubmit = event => {
           event.preventDefault();
         
-        if (this.state.newUserPassword === this.state.confirmUserPassword) {
-             const user = {
-             id: this.state.newUserLogin, 
-             pwd: this.state.newUserPassword, 
-             tasks: []
-             }
-             this.props.checkAdd(user)
-             this.setState(this.initialState);
-             
-             alert("Félicitation compte créé")
-        } else {
+        if (this.state.newUserPassword !== this.state.confirmUserPassword) {
             alert("Attention erreur dans le mot de passe !")
+        } else {
+             this.props.createLogin(this.state.newUserLogin, this.state.newUserPassword)
+             this.setState(this.initialState);
+            
         }
           
-      }*/
+      } */
 
-       handleSubmit = event => {
+      handleSubmit = event => {
+        event.preventDefault();
+      
+      this.state.newUserPassword !== this.state.confirmUserPassword ?
+          alert("Attention erreur dans le mot de passe !")
+      :
+           this.props.createLogin(this.state.newUserLogin, this.state.newUserPassword)
+           this.setState(this.initialState);
+          
+      }
         
-         event.preventDefault();
+    
 
-         const {newUserLogin, newUserPassword, confirmUserPassword} = this.state;
-
-         this.props.createLogin(newUserLogin, newUserPassword, confirmUserPassword);
-         this.setState(this.initialState);
-       }
 
 
     render() {
         return (
             <div>
                 <h2>Création d'un nouveau compte d'Utilisateur</h2>
-                <ul>
+                
                 <form onSubmit={this.handleSubmit}>
-                   <li><label htmlFor="login">Nouvel Identifiant : </label>
+                   <label htmlFor="login">Nouvel Identifiant : </label>
                     <input
                         type="text"
                         name="newUserLogin"
@@ -66,8 +64,7 @@ class FormNewAccount extends Component {
                         required
                         minLength="6"
                     />
-                    </li>
-                    <li>
+                    
                     <label htmlFor="password">Mot de passe : </label>
                     <input
                         type="password"
@@ -79,8 +76,7 @@ class FormNewAccount extends Component {
                         required
                         minLength="6"
                     />
-                    </li>
-                    <li>
+                    
                     <label htmlFor="password">Confirmation du Mot de passe : </label>
                     <input
                         type="password"
@@ -93,15 +89,15 @@ class FormNewAccount extends Component {
                         required
                         minLength="6"
                     />
-                    </li>
                     
-                    <li>
+                    
+                   
                         <input type="submit" value="Valider" />
-                    </li>
+                    
 
 
                 </form>
-                </ul>
+                
             </div>
         );
     }

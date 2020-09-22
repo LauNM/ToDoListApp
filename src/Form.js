@@ -19,7 +19,7 @@ class Form extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className="todoForm" onSubmit={this.handleSubmit}>
                 <input
                     type="text"
                     name="tache"

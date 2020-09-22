@@ -45,7 +45,7 @@ class Connection extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form className="connectionForm" onSubmit={this.handleSubmit}>
                     <label htmlFor="login">Identifiant</label>
                     <input
                         type="text"
