@@ -45,7 +45,10 @@ class Connection extends Component {
     render() {
         return (
             <div>
+                <h3>Connexion</h3>
+                <ul>
                 <form className="connectionForm" onSubmit={this.handleSubmit}>
+                    <li>
                     <label htmlFor="login">Identifiant</label>
                     <input
                         type="text"
@@ -58,6 +61,8 @@ class Connection extends Component {
                         required
                         minLength="6"
                     />
+                    </li>
+                    <li>
                     <label htmlFor="password">Mot de passe</label>
                     <input
                         type="password"
@@ -70,9 +75,12 @@ class Connection extends Component {
                         required
                         minLength="6"
                     />
+                    </li>
+                    <li>
                     <input type="submit" value="Se connecter" />
+                    </li>
                 </form>
-                
+                </ul>
             </div>
            
         );

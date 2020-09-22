@@ -50,10 +50,11 @@ class FormNewAccount extends Component {
     render() {
         return (
             <div>
-                <h2>Création d'un nouveau compte d'Utilisateur</h2>
-                
+                <h3>Création d'un nouveau compte d'Utilisateur</h3>
+                <ul>
                 <form onSubmit={this.handleSubmit}>
-                   <label htmlFor="login">Nouvel Identifiant : </label>
+                    <li>
+                   <label htmlFor="login">Nouvel Identifiant </label>
                     <input
                         type="text"
                         name="newUserLogin"
@@ -64,8 +65,9 @@ class FormNewAccount extends Component {
                         required
                         minLength="6"
                     />
-                    
-                    <label htmlFor="password">Mot de passe : </label>
+                    </li>
+                    <li>
+                    <label htmlFor="password">Mot de passe </label>
                     <input
                         type="password"
                         name="newUserPassword"
@@ -76,8 +78,9 @@ class FormNewAccount extends Component {
                         required
                         minLength="6"
                     />
-                    
-                    <label htmlFor="password">Confirmation du Mot de passe : </label>
+                    </li>
+                    <li>
+                    <label htmlFor="password">Confirmation du Mot de passe </label>
                     <input
                         type="password"
                         name="confirmUserPassword"
@@ -89,15 +92,14 @@ class FormNewAccount extends Component {
                         required
                         minLength="6"
                     />
-                    
-                    
-                   
+                    </li>
+                    <li>
                         <input type="submit" value="Valider" />
-                    
+                    </li>
 
 
                 </form>
-                
+                </ul>
             </div>
         );
     }

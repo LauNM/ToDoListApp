@@ -16,7 +16,7 @@ class App extends Component {
         ]
       },
       {
-        id: "jean",
+        id: "jean95",
         pwd: "111111",
         tasks: []
       }
@@ -24,35 +24,32 @@ class App extends Component {
     userIndexConnected: -1,
     userLoginConnected: "",
     userTasksConnected: [],
-    isClicked: false
+    isClicked: false,
+    personnalMessage: "" 
   };
 
   checkLogin = (login, password) => {
-    let connected = false;
-    this.state.users.forEach((user, index) => {
-      if (login === user.id && password === user.pwd) {
-        connected = true;
-
-        this.setState({
-          userIndexConnected: index,
-          userLoginConnected: user.id,
-          userTasksConnected: user.tasks
-        });
-      }
-    });
-
-    if (!connected) {
+     const user = this.state.users.find((user) => user.id === login && user.pwd === password )
+    if(user) {
+      this.setState({
+        userIndexConnected: this.state.users.indexOf(user),
+        userLoginConnected: user.id,
+        userTasksConnected: user.tasks,
+        personnalMessage : "Bienvenue sur votre espace personnel " + user.id
+      });
+    }
+    else {
       alert("Ce couple identifiant / mot de passe n'existe pas !");
     }
   }
 
   newLogin = (newLogin, newPassword) => {
-    let connected = false;
-    if (this.state.users.find(({ id }) => id === newLogin)) {
+    
+    if (this.state.users.find(( id ) => id === newLogin)) {
       return alert("Nom d'utilisateur déjà prit !");
 
     }
-    else if (!connected) {
+    else {
 
       let newUser = {
         id: newLogin,
@@ -63,7 +60,8 @@ class App extends Component {
         users: [...this.state.users, newUser],
         userIndexConnected: this.state.users.length,
         userLoginConnected: newLogin,
-        userTasksConnected: []
+        userTasksConnected: [],
+        personnalMessage : "Bienvenue sur votre espace personnel " + newLogin
       });
     }
   }
@@ -124,36 +122,48 @@ class App extends Component {
 
   }
 
+
   render() {
-    const { userLoginConnected, userTasksConnected, isClicked } = this.state;
+    const { userLoginConnected, userTasksConnected, isClicked, personnalMessage } = this.state;
     return (
       <div>
-        <h1>Todo List</h1>
         {
           userLoginConnected !== "" ?
             <div>
-              <div>
-                <button className="logoutBtn"onClick={this.logout}>Déconnexion</button>
+              <h2>{personnalMessage}</h2>
+              <div className="returnBtn">
+                <button onClick={this.logout}>Déconnexion</button>
               </div>
               <Form addTache={this.addTache} />
               <List taches={userTasksConnected} checkTache={this.checkTache} />
-              <button onClick={this.removeChecked}>Supprimer les tâches accomplies</button>
-              <button onClick={this.removeAllTaches}>Supprimer toutes les tâches</button>
-              
+              <div className="btnDelete">
+                <button onClick={this.removeChecked}>Supprimer les tâches accomplies</button>
+                <button onClick={this.removeAllTaches}>Supprimer toutes les tâches</button>
+              </div>
 
             </div>
             :
             <div>
+              <h1>Todo List</h1>
               {isClicked !== true ?
 
                 <div>
-                  <Connection verifyLogin={this.checkLogin} />
-                  <button onClick={this.handleNewAccountClick}>Créer un compte</button>
+                  <div className="btnNewAccount">
+                    <button  onClick={this.handleNewAccountClick}>Créer un compte</button>
+                  </div>
+                  <div>
+                    <Connection verifyLogin={this.checkLogin} />
+                  </div>
+                  
                 </div>
                 :
-                <div>
+                <div className="returnBtn">
+                  <div>
                   <button onClick={this.handleNewAccountClick}>Retour Espace de Connexion</button>
+                  </div>
+                  <div>
                   <FormNewAccount createLogin={this.newLogin} />
+                  </div>
                 </div>
               }
             </div>
